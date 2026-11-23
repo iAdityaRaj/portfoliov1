@@ -5,7 +5,7 @@
 
 Personal portfolio built to showcase my work at the intersection of intelligent systems and reliable software — LLM-powered workflows, semantic retrieval, and backend engineering.
 
-🌐 **Live:** [iadityaraj.vercel.app](https://iadityaraj.vercel.app)
+🌐 **Live:** ([https://iadityaraj.vercel.app](https://adityaraj-v1.vercel.app/))
 
 ---
 
