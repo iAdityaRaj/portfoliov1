@@ -1,0 +1,387 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================================================
+ * Design System — Grounded in Peter Holderrieth's al-folio theme (_themes.scss,
+ * _variables.scss, _base.scss, _layout.scss) + restrained terminal typography
+ * ============================================================================ */
+
+:root {
+  --font-roboto: "Roboto";
+  --font-roboto-slab: "Roboto Slab";
+  --font-ibm-mono: "IBM Plex Mono";
+  --global-bg-color: #ffffff;
+  --global-card-bg-color: #ffffff;
+  --global-surface-subtle: #fafaf9;
+  --global-code-bg-color: rgba(181, 9, 172, 0.05);
+  --global-text-color: #000000;
+  --global-text-color-secondary: #2c2c2e;
+  --global-text-color-light: #6b6b70;
+  --global-muted-raw: #828282;
+  --global-theme-color: #b509ac;
+  --global-hover-color: #b509ac;
+  --global-hover-text-color: #ffffff;
+  --global-divider-color: rgba(0, 0, 0, 0.1);
+  --global-divider-strong: rgba(0, 0, 0, 0.18);
+  --stat-highlight-bg: rgba(181, 9, 172, 0.1);
+
+  /* Terminal surface — subtle warm-paper contrast in light mode (inspired by msingh9365) */
+  --term-bg: #fafaf8;
+  --term-header-bg: #f2f2ee;
+  --term-border: rgba(0, 0, 0, 0.12);
+  --term-prompt: #b509ac;
+
+  /* Coding & LeetCode green — used strictly for coding status & heatmap */
+  --coding-green: #00ab37;
+  --lc-level-0: #ebedf0;
+  --lc-level-1: #9be9a8;
+  --lc-level-2: #40c463;
+  --lc-level-3: #30a14e;
+  --lc-level-4: #216e39;
+}
+
+html[data-theme="dark"] {
+  --global-bg-color: #1c1c1d;
+  --global-card-bg-color: #212529;
+  --global-surface-subtle: #23262a;
+  --global-code-bg-color: #2c3237;
+  --global-text-color: #e8e8ea;
+  --global-text-color-secondary: #cfd0d4;
+  --global-text-color-light: #9c9ca4;
+  --global-muted-raw: #828282;
+  --global-theme-color: #2698ba;
+  --global-hover-color: #2698ba;
+  --global-hover-text-color: #ffffff;
+  --global-divider-color: #424246;
+  --global-divider-strong: #56565c;
+  --stat-highlight-bg: rgba(38, 152, 186, 0.22);
+
+  --term-bg: #17181a;
+  --term-header-bg: #202225;
+  --term-border: #383a3f;
+  --term-prompt: #2698ba;
+
+  --coding-green: #11d68b;
+  --lc-level-0: #292b2f;
+  --lc-level-1: #0e4429;
+  --lc-level-2: #006d32;
+  --lc-level-3: #26a641;
+  --lc-level-4: #39d353;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+  overflow-x: clip;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+body {
+  background-color: var(--global-bg-color);
+  color: var(--global-text-color);
+  font-family: var(--font-roboto), Roboto, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-weight: 300;
+  font-size: 1rem;
+  line-height: 1.62;
+  overflow-x: hidden;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+/* Theme switch: circular reveal expanding from the toggle button */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+::view-transition-new(root) {
+  animation: theme-reveal 0.55s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes theme-reveal {
+  from {
+    clip-path: circle(0px at var(--theme-x, 50%) var(--theme-y, 50%));
+  }
+  to {
+    clip-path: circle(var(--theme-r, 150%) at var(--theme-x, 50%) var(--theme-y, 50%));
+  }
+}
+
+html.theme-transition,
+html.theme-transition *,
+html.theme-transition *::before,
+html.theme-transition *::after {
+  transition: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease,
+    fill 0.4s ease, stroke 0.4s ease !important;
+}
+
+.theme-icon-swap {
+  animation: theme-icon-spin 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes theme-icon-spin {
+  from {
+    transform: rotate(-90deg) scale(0.4);
+    opacity: 0;
+  }
+  to {
+    transform: rotate(0deg) scale(1);
+    opacity: 1;
+  }
+}
+
+/* ---------- UI motion ---------- */
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.hero-stagger > * {
+  animation: fade-up 0.7s cubic-bezier(0.2, 0.65, 0.3, 1) both;
+}
+.hero-stagger > *:nth-child(1) { animation-delay: 0.05s; }
+.hero-stagger > *:nth-child(2) { animation-delay: 0.13s; }
+.hero-stagger > *:nth-child(3) { animation-delay: 0.21s; }
+.hero-stagger > *:nth-child(4) { animation-delay: 0.29s; }
+.hero-stagger > *:nth-child(5) { animation-delay: 0.37s; }
+.hero-stagger > *:nth-child(6) { animation-delay: 0.45s; }
+
+.hero-aside {
+  animation: fade-up 0.8s cubic-bezier(0.2, 0.65, 0.3, 1) 0.3s both;
+}
+
+.logo-strip > * {
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.logo-strip > *:hover {
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+}
+
+.type-cursor {
+  display: inline-block;
+  margin-left: 1px;
+  animation: cursor-blink 1s steps(1) infinite;
+}
+@keyframes cursor-blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+/* Scroll reveal; .reveal is only added by JS to sections below the fold */
+.reveal {
+  opacity: 0;
+  transform: translateY(26px);
+  transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.2, 0.65, 0.3, 1);
+}
+.reveal.is-revealed {
+  opacity: 1;
+  transform: none;
+}
+.reveal .section-rail {
+  border-color: transparent;
+  transition: border-color 0.6s ease 0.25s;
+}
+.reveal.is-revealed .section-rail {
+  border-color: var(--global-theme-color);
+}
+.reveal .section-rail-label {
+  opacity: 0;
+  transform: translateX(-10px);
+  transition: opacity 0.5s ease 0.2s, transform 0.5s ease 0.2s;
+}
+.reveal.is-revealed .section-rail-label {
+  opacity: 1;
+  transform: none;
+}
+
+.hover-lift {
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.15s ease;
+}
+.hover-lift:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 22px -12px rgba(0, 0, 0, 0.28);
+}
+
+.nav-link {
+  position: relative;
+}
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -4px;
+  height: 1.5px;
+  background: var(--global-theme-color);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.25s ease;
+}
+.nav-link:hover::after,
+.nav-link.is-active::after {
+  transform: scaleX(1);
+}
+
+.marker-pulse {
+  animation: marker-pulse 2s ease-out infinite;
+}
+@keyframes marker-pulse {
+  0% {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--global-theme-color) 55%, transparent);
+  }
+  100% {
+    box-shadow: 0 0 0 9px transparent;
+  }
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--global-text-color);
+  scroll-margin-top: 72px;
+}
+
+strong,
+b {
+  font-weight: 500;
+  color: var(--global-text-color);
+}
+
+/* Editorial links matching Peter Holderrieth's al-folio styling */
+.editorial-link {
+  color: var(--global-theme-color);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+
+.editorial-link:hover {
+  color: var(--global-theme-color);
+  border-bottom-color: var(--global-theme-color);
+}
+
+.dashed-link {
+  color: var(--global-text-color);
+  text-decoration: none;
+  border-bottom: 1px dashed var(--global-theme-color);
+  transition: color 0.15s ease, border-bottom-style 0.15s ease;
+}
+
+.dashed-link:hover {
+  color: var(--global-theme-color);
+  border-bottom-style: solid;
+}
+
+/* Signature stat highlight from Peter Holderrieth's _layout.scss */
+.stat-highlight {
+  font-weight: 500;
+  color: var(--global-text-color);
+  background: var(--stat-highlight-bg);
+  border-radius: 3px;
+  padding: 0.04em 0.28em;
+}
+
+/* Signature left-rail editorial layout from Peter Holderrieth's _layout.scss */
+.editorial-section {
+  display: grid;
+  grid-template-columns: 132px minmax(0, 1fr);
+  gap: 1.5rem;
+  padding: 2.25rem 0;
+  border-top: 1px solid var(--global-divider-color);
+}
+
+.section-rail {
+  border-right: 2px solid var(--global-theme-color);
+  padding-right: 0.9rem;
+  text-align: right;
+}
+
+.section-rail-label {
+  display: inline-block;
+  position: sticky;
+  top: 76px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--global-theme-color);
+  line-height: 1.35;
+}
+
+@media (max-width: 740px) {
+  .editorial-section {
+    grid-template-columns: 1fr;
+    gap: 0.85rem;
+    padding: 1.75rem 0;
+  }
+
+  .section-rail {
+    border-right: none;
+    border-bottom: 2px solid var(--global-theme-color);
+    padding-right: 0;
+    padding-bottom: 0.3rem;
+    text-align: left;
+  }
+
+  .section-rail-label {
+    position: static;
+  }
+}
+
+/* Accessible focus outlines */
+:focus-visible {
+  outline: 2px solid var(--global-theme-color);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* Inline code */
+code.inline-code {
+  font-family: var(--font-ibm-mono), monospace;
+  font-size: 0.85em;
+  color: var(--global-theme-color);
+  background-color: var(--global-code-bg-color);
+  border-radius: 3px;
+  padding: 0.1rem 0.32rem;
+}
+
+/* Subtle custom scrollbar for terminal & horizontal diagrams */
+.thin-scrollbar::-webkit-scrollbar {
+  height: 6px;
+  width: 6px;
+}
+
+.thin-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.thin-scrollbar::-webkit-scrollbar-thumb {
+  background: var(--global-divider-color);
+  border-radius: 3px;
+}
