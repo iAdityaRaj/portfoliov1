@@ -16,7 +16,7 @@ export function Footer() {
             Get in touch
           </h2>
           <p className="mt-1 text-[14px] text-[var(--global-text-color-light)]">
-            Open to discussions on AI systems, semantic retrieval, LLM infrastructure, and backend engineering.
+            Open to discussions on AI systems, ML , LLM infrastructure, and backend engineering.
           </p>
         </div>
 
@@ -31,7 +31,7 @@ export function Footer() {
 
       <div className="mt-6 pt-5 border-t border-[var(--global-divider-color)] flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 text-[12.5px] text-[var(--global-text-color-light)]">
         <div>
-          © {new Date().getFullYear()} {identity.name}. Built with Next.js &amp; TypeScript.
+          © {new Date().getFullYear()} {identity.name}.
         </div>
 
         <div className="flex flex-wrap items-center gap-4 font-mono text-[12px]">
