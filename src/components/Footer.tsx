@@ -16,7 +16,7 @@ export function Footer() {
             Get in touch
           </h2>
           <p className="mt-1 text-[14px] text-[var(--global-text-color-light)]">
-            Open to discussions on AI systems, ML , LLM infrastructure, and backend engineering.
+            // always up for: AI systems · ML · LLM infrastructure · backend engineering
           </p>
         </div>
 
