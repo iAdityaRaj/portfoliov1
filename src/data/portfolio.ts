@@ -153,7 +153,7 @@ export const portfolioConfig = {
     instagram: "https://www.instagram.com/add1tyaraj/",
     instagramHandle: "@add1tyaraj",
     email: "raj229488@gmail.com",
-    resumePath: "/resume.pdf",
+    resumePath: "https://drive.google.com/file/d/19LjUOsMsmbVpetDU-oc2VOdo7zpB-bNY/view?usp=drive_link",
   } satisfies SocialLinks,
 
   about: {
